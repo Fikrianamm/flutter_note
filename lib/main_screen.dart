@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_note/create_screen.dart';
+import 'package:flutter_note/detail_screen.dart';
 import 'package:flutter_note/model/note.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +20,20 @@ class MainScreen extends StatelessWidget {
           children: noteList.map((note) => CardNote(note: note)).toList(),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text(
+          'Add',
+          style:
+              TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[800]),
+        ),
+        backgroundColor: Colors.white,
+        icon: Icon(Icons.add, color: Colors.grey[800], size: 25),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const CreateScreen();
+          }));
+        },
+      ),
     );
   }
 }
@@ -31,7 +47,11 @@ class CardNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(16)),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DetailScreen(note: note);
+        }));
+      },
       child: Card(
         color: const Color.fromARGB(255, 31, 31, 31),
         elevation: 0,
@@ -107,7 +127,7 @@ class CardNote extends StatelessWidget {
                       color: Colors.grey[700],
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
-                  maxLines: 4,
+                  maxLines: 5,
                   overflow: TextOverflow.ellipsis),
             ],
           ),
